@@ -52,8 +52,43 @@ namespace cu.BasicForms.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Order(OrdersOrderViewModel
             ordersOrderViewModel)
+        {
+            //perform model validation
+            if(!ModelState.IsValid)
+            {
+                //form has errors
+                //repopulate list of foods
+                ordersOrderViewModel.Foods
+                = new List<SelectListItem> {
+                new SelectListItem
+                {
+                    Value = "1",Text="Spaghetti Marinara"
+                },
+                new SelectListItem
+                {
+                    Value = "2",Text="Spaghetti Carbonara"
+                },
+                new SelectListItem
+                {
+                    Value = "3",Text="Rigatoni al Forno"
+                },
+                new SelectListItem
+                {
+                    Value = "4",Text="Pizza Diavola"
+                }
+                };
+                //send back the view
+                return View(ordersOrderViewModel);
+            }
+            //everything ok!
+            //store order
+            return RedirectToAction("Confirmation");
+        }
+        [HttpGet]
+        public IActionResult Confirmation()
         {
             return View();
         }

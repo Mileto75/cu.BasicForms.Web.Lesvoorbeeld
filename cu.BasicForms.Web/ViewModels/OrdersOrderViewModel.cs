@@ -11,6 +11,7 @@ namespace cu.BasicForms.Web.ViewModels
     {
         [DisplayName("Email of gebruikersnaam:")]
         [Required(ErrorMessage = "Geef gebruikersnaam in!")]
+        [DataType(DataType.EmailAddress,ErrorMessage = "Geef een correct emailadres in!")]
         public string Username { get; set; }
         [DisplayName("Wanneer?")]
         [DataType(DataType.DateTime)]

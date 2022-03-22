@@ -56,8 +56,13 @@ namespace cu.BasicForms.Web.Controllers
         public IActionResult Order(OrdersOrderViewModel
             ordersOrderViewModel)
         {
+            //check date
+            if (ordersOrderViewModel.OrderDate < DateTime.Now)
+            {
+                ModelState.AddModelError("OrderDate", "Kan niet naar het verleden rijden!");
+            }
             //perform model validation
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 //form has errors
                 //repopulate list of foods
@@ -83,6 +88,8 @@ namespace cu.BasicForms.Web.Controllers
                 //send back the view
                 return View(ordersOrderViewModel);
             }
+            //perform custom validation
+            
             //everything ok!
             //store order
             return RedirectToAction("Confirmation");
